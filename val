@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(to right, #fbc2eb, #f78ca0);
+    overflow: hidden;
+}
+
+/* First Screen */
+#question-screen {
+    display: block;
+}
+
+#yes-screen {
+    display: none;
+}
+
+h1 {
+    color: #d63384;
+    font-size: 40px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background-color: #6c757d;
+    color: white;
+}
+
+img {
+    width: 250px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST SCREEN -->
+<div id="question-screen">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yesBtn">Yes 💘</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<!-- SECOND SCREEN -->
+<div id="yes-screen">
+    <h1>Knew you would say yes! 🎉</h1>
+    <img src="https://media.tenor.com/2roX3uxz_68AAAAC/cute-love.gif" alt="celebration">
+    <p style="font-size: 22px; color:#d63384;">
+        You just made me the happiest person! 💕
+    </p>
+</div>
+
+<script>
+let yesButton = document.getElementById("yesBtn");
+let noButton = document.getElementById("noBtn");
+let size = 20;
+
+noButton.addEventListener("click", function() {
+    size += 10;
+    yesButton.style.fontSize = size + "px";
+    yesButton.style.padding = (size/2) + "px " + (size) + "px";
+});
+
+yesButton.addEventListener("click", function() {
+    document.getElementById("question-screen").style.display = "none";
+    document.getElementById("yes-screen").style.display = "block";
+});
+</script>
+
+</body>
+</html>
