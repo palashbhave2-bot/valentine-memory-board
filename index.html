@@ -62,11 +62,8 @@ button {
     color: white;
 }
 
-img {
-    width: 250px;
-    margin-top: 20px;
-}
-</style> #muteBtn {
+/* Mute Button */
+#muteBtn {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -85,8 +82,14 @@ img {
 #muteBtn:hover {
     transform: scale(1.1);
 }
+
+img {
+    width: 250px;
+    margin-top: 20px;
+}
+</style>
 </head>
-<button id="muteBtn">🔊</button>
+
 <body>
 
 <!-- Background Music -->
@@ -110,10 +113,14 @@ img {
     </p>
 </div>
 
+<!-- Mute Button -->
+<button id="muteBtn">🔊</button>
+
 <script>
 let yesButton = document.getElementById("yesBtn");
 let noButton = document.getElementById("noBtn");
 let music = document.getElementById("bgMusic");
+let muteBtn = document.getElementById("muteBtn");
 
 let size = 20;
 let noTexts = [
@@ -128,13 +135,12 @@ let noTexts = [
 
 let clickCount = 0;
 
-// Start music on first interaction (browser requirement)
+// Start music on first interaction
 document.body.addEventListener("click", function() {
-    music.play();
+    music.play().catch(() => {});
 }, { once: true });
 
 noButton.addEventListener("click", function() {
-
     size += 8;
     yesButton.style.fontSize = size + "px";
     yesButton.style.padding = (size/2) + "px " + size + "px";
@@ -150,7 +156,7 @@ yesButton.addEventListener("click", function() {
     document.getElementById("yes-screen").style.display = "block";
 });
 
-// Floating hearts generator
+// Floating hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -164,8 +170,10 @@ function createHeart() {
         heart.remove();
     }, 6000);
 }
-let muteBtn = document.getElementById("muteBtn");
 
+setInterval(createHeart, 400);
+
+// Mute toggle
 muteBtn.addEventListener("click", function () {
     if (music.muted) {
         music.muted = false;
@@ -175,8 +183,6 @@ muteBtn.addEventListener("click", function () {
         muteBtn.innerText = "🔇";
     }
 });
-    
-setInterval(createHeart, 400);
 </script>
 
 </body>
