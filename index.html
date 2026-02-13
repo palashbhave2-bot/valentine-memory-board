@@ -8,28 +8,37 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
     height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to right, #d8b4fe, #a855f7);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(to right, #fbc2eb, #f78ca0);
-    overflow: hidden;
 }
 
-/* First Screen */
-#question-screen {
-    display: block;
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -50px;
+    color: #9333ea;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
 }
 
-#yes-screen {
-    display: none;
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
+
+/* Screens */
+#question-screen { display: block; }
+#yes-screen { display: none; }
 
 h1 {
-    color: #d63384;
+    color: white;
     font-size: 40px;
 }
 
@@ -44,12 +53,12 @@ button {
 }
 
 #yesBtn {
-    background-color: #ff4d6d;
+    background-color: #ec4899;
     color: white;
 }
 
 #noBtn {
-    background-color: #6c757d;
+    background-color: #4b5563;
     color: white;
 }
 
@@ -62,13 +71,13 @@ img {
 
 <body>
 
+<!-- Background Music -->
+<audio id="bgMusic" src="suspense.mp3" loop></audio>
+
 <!-- FIRST SCREEN -->
 <div id="question-screen">
-    <h1>Will you be my Valentine? 💖</h1>
-
-    <!-- Minion Heart GIF -->
+    <h1>Will you be my Valentine? 💜</h1>
     <img src="minion.gif" alt="minion love">
-
     <br>
     <button id="yesBtn">Yes 💘</button>
     <button id="noBtn">No 😢</button>
@@ -77,30 +86,68 @@ img {
 <!-- SECOND SCREEN -->
 <div id="yes-screen">
     <h1>Knew you would say yes! 🎉</h1>
-
-    <!-- Your evil monkey image -->
-    <img src="monkey.gif" alt="celebration">
-
-    <p style="font-size: 22px; color:#d63384;">
-        You just made me the happiest person! 💕
+    <img src="monkey.png" alt="celebration">
+    <p style="font-size: 22px; color:white;">
+        You just made me the happiest person 💜
     </p>
 </div>
 
 <script>
 let yesButton = document.getElementById("yesBtn");
 let noButton = document.getElementById("noBtn");
+let music = document.getElementById("bgMusic");
+
 let size = 20;
+let noTexts = [
+    "Are you sure, Dhanvi? 😭",
+    "Pookie pls 🥺",
+    "If you say no I'll be really sad 💔",
+    "Think again 😢",
+    "Don’t break my heart 💜",
+    "Last chance... 👀",
+    "Pleaseeee 😩"
+];
+
+let clickCount = 0;
+
+// Start music on first interaction (browser requirement)
+document.body.addEventListener("click", function() {
+    music.play();
+}, { once: true });
 
 noButton.addEventListener("click", function() {
-    size += 10;
+
+    size += 8;
     yesButton.style.fontSize = size + "px";
-    yesButton.style.padding = (size/2) + "px " + (size) + "px";
+    yesButton.style.padding = (size/2) + "px " + size + "px";
+
+    if (clickCount < noTexts.length) {
+        noButton.innerText = noTexts[clickCount];
+        clickCount++;
+    }
 });
 
 yesButton.addEventListener("click", function() {
     document.getElementById("question-screen").style.display = "none";
     document.getElementById("yes-screen").style.display = "block";
 });
+
+// Floating hearts generator
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "💜";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 400);
 </script>
 
 </body>
